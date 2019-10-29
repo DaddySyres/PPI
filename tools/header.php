@@ -6,7 +6,7 @@
                     <a class="nav-link" href="index.php">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login_register.php">Entrar</a>
+                    <a class="nav-link" href="login.php">Entrar</a>
                 </li>
             </ul>
         </div>
