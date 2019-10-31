@@ -1,19 +1,43 @@
-<nav class="navbar navbar-expand-sm" class='background-color:rgba(0.0.0.6);'>
-        <a class="navbar-brand" href="#"><span class="text-danger">M</span><span class="text-success">KAMP</span></a>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.php">Entrar</a>
-                </li>
-            </ul>
-        </div>
-        <form class="  form-inline float-right mr-sm-2">
-            <input class="form-control-sm mr-2 border-top-0 border-left-0 border-right-0 border border-dark rounded-0 type="search" placeholder="Pesquise algo!" aria-label="Search">
-            <button class="btn btn-sm" type="submit"><i class="material-icons">search</i></button>
-        </form>
-    </nav>
-</body>
-</html>
+
+<style>
+
+</style>
+<nav>
+    <div class="nav-wrapper green lighten-1" style="">
+        <a href="index.php" class="brand-logo">MKAMP</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="login.php">Entrar</a></li>
+            <li><a href="signin.php">Cadastrar</a></li>
+            <li class='active' style=' height:64px; '>
+                <div class="row">
+                    <div class="col s12">
+                        <form action='' method=''>
+                            <div class="input-field">
+                                <input id="search" type="search" required class='transparent'>
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </li>
+            <li class='active'><a class="dropdown-trigger" href="#!" data-target="oof">Décadas<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+        <ul id="oof" class="dropdown-content">
+            <li><a href="search">2010</a></li>
+            <li><a href="#!">2000</a></li>
+            <li><a href="#!">1990</a></li>
+            <li><a href="#!">1980</a></li>
+            <li><a href="#!">1970</a></li>
+            <li><a href="#!">1960</a></li>
+        </ul>
+    </div>
+</nav>
+<script>
+options = { hover: true, coverTrigger: false}
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+});
+
+</script>

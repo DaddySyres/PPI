@@ -30,4 +30,7 @@ if (isset($_POST["submit"])) {
             exit();
         }
     }
+} else {
+    header("Location: ../signin.php");
+    exit();
 }
