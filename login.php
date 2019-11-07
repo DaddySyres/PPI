@@ -2,25 +2,32 @@
 include_once 'tools/head.php';
 include_once 'tools/header.php';
 ?>
+<style>
+    .card .card-title{
+        font-size:35px !important;
+    }
+    button{
+        font-size:18px !important;
+    }
+</style>
         <div class="row">
-            <div class="container">
-                <div class="card center-aling col s6 offset-s3">
+            <div class="card center-aling col s4 offset-s4 hoverable">
+                <div class="card-content">
+                <span class="card-title">Entrar</span>
+                <br>
                     <form action="includes/login.php">
-
-                        <h3>por favor de o cu</h3>
-
-                        <div class="input-field" style=''>
-                            <label style='font-size:16px;' for="user">Nome de usuario</label>
-                            <input style='font-size:20px;' name='username' id='user' type="text" required>
-                        </div>
-
-                        <label style='font-size:16px;'   for="pass">Senha </label>
-                        <input style='font-size:20px;' name='password' id='pass' type="text" required>
-
+                        <label style='font-size:16px;' for="user">Nome de usuario</label>
+                        <input style='font-size:20px;' name='username' id='user' type="text" required>
                         <br>
-                        <button class="btn waves-effect waves-heavy" type="submit" name="action">Entrar
-                            <i class="material-icons right">send</i>
-                        </button>
+                        <br>
+                        <label style='font-size:16px;'   for="pass">Senha </label>
+                        <input style='font-size:20px;' name='password' id='pass' type="password" required>
+                        <br>
+                        <div class="center-align" style='margin-top:30px;'>
+                            <button class="btn-large waves-effect waves-heavy hoverable" type="submit" name="action">Entrar
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
