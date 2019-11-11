@@ -1,19 +1,16 @@
 
 <?php
-$folderPath = "/";
+var_dump($_POST['OOF']);
+$base64_string = $_POST['OOF'];
+$data = explode(',', $base64_string);
+$data = explode('data:image/png;base64', $data);
+$data = explode('+', $data);
+$data = explode(';', $data);
+$data = explode('/', $data);
 
-$image_parts = explode(";base64,", $_POST['imagebase64']);
-
-$image_type_aux = explode("/", $image_parts[0]);
-
-$image_type = $image_type_aux[1];
-
-$image_base64 = base64_decode($image_parts[1]);
-
-$file = $folderPath . uniqid() . '.png';
-
-file_put_contents($file, $image_base64);
-
+$content = base64_decode($data);
+echo "<br><br><br><br><br><br><br>";
+var_dump($content);
 /*
 if (isset($_POST["submit"])) {
 session_start();
@@ -50,3 +47,4 @@ exit();
 header("Location: ../signin.php");
 exit();
 }
+ */
