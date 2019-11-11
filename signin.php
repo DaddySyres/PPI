@@ -1,11 +1,11 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.css" integrity="sha256-M8o9uqnAVROBWo3/2ZHSIJG+ZHbaQdpljJLLvdpeKcI=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.js" integrity="sha256-u/CKfMqwJ0rXjD4EuR5J8VltmQMJ6X/UQYCFA4H9Wpk=" crossorigin="anonymous"></script>
+<script src="assets/js/exif.js"></script>
 <?php
 include_once 'tools/head.php';
 include_once 'tools/header.php';
 ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.js" integrity="sha256-EuV9YMxdV2Es4m9Q11L6t42ajVDj1x+6NZH4U1F+Jvw=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.css" integrity="sha256-cZDeXQ7c9XipzTtDgc7DML5txS3AkSj0sjGvWcdhfns=" crossorigin="anonymous" />
-
 <style>
     .card .card-title{
         font-size:35px !important;
@@ -14,16 +14,16 @@ include_once 'tools/header.php';
         font-size:18px !important;
     }
     img {
-      max-width: 100%;
+      max-width: 80%;
     }
-
 </style>
+
         <div class="row">
             <div class="card center-aling col s8 offset-s2 hoverable">
                 <div class="card-content">
                     <span class="card-title">Cadastrar</span>
                     <br>
-                    <form action="includes/login.php">
+                    <form action="includes/signin.php" id='form1' method='POST' enctype='multipart/form-data'>
 
                         <div class="row">
                             <div class="col s6">
@@ -34,67 +34,88 @@ include_once 'tools/header.php';
                                 <label style='font-size:16px;' for="pass">Senha </label>
                                 <input style='font-size:20px;' name='password' id='pass' type="password" required>                            </div>
                             </div>
-
-
                         <div class="row">
-                            <div class="col s6  ">
+                            <div class="col s6">
+                                <div class="file-field input-field" style='padding-top:9px;'>
+                                    <div class="btn">
+                                        <span>Imagem de perfil</span>
+                                        <input type="file" name="upload_image" id="upload_image" />
+                                    </div>
+                                    <div class="file-path-wrapper" hide>
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s6 ">
                                 <div>
                                     <label style='font-size:16px;' for="email">Email </label>
                                     <input style='font-size:20px;' name='email' id='email' type="email" required>
                                 </div>
                             </div>
                         </div>
-                        <div class="image-container">
-                        <form runat="server">
-                            <h1>Image File Reader</h1>
-                            <div>
-                                Select an image file:
-                                <input type="file" id="fileInput">
-                            </div>
-                            <div id="fileDisplayArea"></div>
-                        </div>
-                        <div class="center-align" style='margin-top:30px;'>
-                            <button class="btn-large waves-effect waves-heavy hoverable" type="submit" name="action">Entrar
-                                <i class="material-icons right">send</i>
-                            </button>
-                        </div>
 
+
+
+                        <div class="row"  style='height:360px'>
+                            <div class="col s4">
+                                <div id="thefuck">
+                                    <div id="image_demo" style="width:350px; margin-top:30px"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="col s4">
+                                <div class="center-align" style='margin-top:60px;'>
+                                    <input type="hidden" name='OOF' id='imagebase64'>
+                                    <button class="btn-large waves-effect waves-heavy hoverable" id='crop_image' name="action">Salvar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
 
-</body>
-<script>
-window.onload = function() {
+        <script>
+            $(document).ready(function(){
 
-var fileInput = document.getElementById('fileInput');
-var fileDisplayArea = document.getElementById('fileDisplayArea');
+                    $image_crop = $('#image_demo').croppie({
+                    enableExif: true,
+                    viewport: {
+                    width:200,
+                    height:200,
+                    type:'square' //circle
+                    },
+                    boundary:{
+                    width:300,
+                    height:300
+                    }
+                });
 
-
-fileInput.addEventListener('change', function(e) {
-    var file = fileInput.files[0];
-    var imageType = /image.*/;
-
-    if (file.type.match(imageType)) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            fileDisplayArea.innerHTML = "";
-
-            var img = new Image();
-            img.src = reader.result;
-
-            fileDisplayArea.appendChild(img);
-        }
-
-        reader.readAsDataURL(file);
-    } else {
-        fileDisplayArea.innerHTML = "File not supported!"
-    }
-});
-}
-
+            $('#upload_image').on('change', function(){
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function(){
+                    console.log('jQuery bind complete');
+                });
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+            $('#crop_image').click(function(event){
+                $image_crop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(response){
+                    $('#imagebase64').val(response);
+                   //    $('#form').submit();
+            })
+        });
+    });
 </script>
 
+</body>
 </html>
