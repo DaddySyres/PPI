@@ -9,3 +9,6 @@
     <script src="assets/js/materialize.min.js"></script>
 </head>
 <body>
+<?php
+session_start();
+?>

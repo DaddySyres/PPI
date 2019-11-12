@@ -1,50 +1,44 @@
 
 <?php
-var_dump($_POST['OOF']);
-$base64_string = $_POST['OOF'];
-$data = explode(',', $base64_string);
-$data = explode('data:image/png;base64', $data);
-$data = explode('+', $data);
-$data = explode(';', $data);
-$data = explode('/', $data);
 
-$content = base64_decode($data);
-echo "<br><br><br><br><br><br><br>";
-var_dump($content);
-/*
-if (isset($_POST["submit"])) {
 session_start();
-include 'dbh.php';
-if (!empty($_POST['username']) && !empty($_POST['']) && !empty($_POST['']) && !empty($_POST[''])) {
-$username = mysqli_real_escape_string($conn, trim($_POST['username']));
-$user_password = mysqli_real_escape_string($conn, trim(md5($_POST['password'])));
-$user_email = mysqli_real_escape_string($conn, trim($_POST['email']));
-$user_image = $_FILES['arquivo']['name'];
+include_once 'dbh.php';
 
-$sql_search = "SELECT count(*) as total from users where user_name = '$username'";
-$result = mysqli_query($conn, $sql_search);
-$row = mysqli_fetch_assoc($result);
+if (!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+    $username = mysqli_real_escape_string($conn, trim($_POST['username']));
+    $user_password = mysqli_real_escape_string($conn, md5($_POST['password']));
+    $user_email = mysqli_real_escape_string($conn, trim($_POST['email']));
 
-if ($row['total'] == 1) {
-$_SESSION['erro_signin'] = "Nome de usuario já existente!";
-header('location: ../signin.php');
-exit();
-}
+    $sql_search = "SELECT count(*) as total from users where user_name = '$username'";
+    $result = mysqli_query($conn, $sql_search);
+    $row = mysqli_fetch_assoc($result);
 
-$sql_insert = "INSERT INTO users (user_name, user_password, user_email, user_image, user_level) VALUES ('$username', '$user_password', '$user_email', '$user_image',1);";
-$result_search = mysqli_query($conn, $sql_insert);
+    if ($row['total'] > 0) {
+        $_SESSION['erro_signin'] = "Nome de usuario já existente!";
+        header('location: ../signin.php');
+        exit();
+    }
 
-$dir = '../database/profiles/user/' . $username . '/';
-mkdir($dir, 0777);
+    $dir = '../database/profiles/user/' . $username . '/';
+    mkdir($dir, 0777);
 
-if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $dir . $user_image)) {
-$conn->close();
-header('location: ../login.php');
-exit();
-}
-}
+    $data = $_POST["OOF"];
+    $image_array_1 = explode(";", $data);
+    $image_array_2 = explode(",", $image_array_1[1]);
+    $data = base64_decode($image_array_2[1]);
+    $imageName = uniqid() . '.png';
+    file_put_contents($imageName, $data);
+
+    $image_path = $imageName;
+    $image_true = $dir . $imageName;
+
+    $sql_insert = "INSERT INTO users (user_name, user_password, user_email, user_image, user_level) VALUES ('$username', '$user_password', '$user_email', '$imageName',1);";
+    $result_search = mysqli_query($conn, $sql_insert);
+
+    rename($image_path, $image_true);
+    header('location: ../login.php');
+    exit();
 } else {
-header("Location: ../signin.php");
-exit();
+    header("Location: ../signin.php");
+    exit();
 }
- */

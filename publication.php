@@ -5,7 +5,7 @@
 <?php
 include_once 'tools/head.php';
 include_once 'tools/header.php';
-if (isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     header("location: index.php");
     exit();
 }
@@ -30,14 +30,17 @@ if (isset($_SESSION['user_id'])) {
                     <form action="includes/signin.php" id='form1' method='POST' enctype='multipart/form-data'>
 
                         <div class="row">
-                            <div class="col s6">
-                                <label style='font-size:16px;' for="user">Nome de usuario</label>
-                                <input style='font-size:20px;' name='username' id='user' type="text" required>
+                            <div class="col s12">
+                                <label style='font-size:16px;' for="title">Título</label>
+                                <input style='font-size:20px;' name='title' id='title' type="text" required>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col s6">
                                 <label style='font-size:16px;' for="pass">Senha </label>
                                 <input style='font-size:20px;' name='password' id='pass' type="password" required>                            </div>
                             </div>
+                        </div>
                         <div class="row">
                             <div class="col s6">
                                 <div class="file-field input-field" style='padding-top:9px;'>
