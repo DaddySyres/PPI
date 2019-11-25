@@ -19,6 +19,7 @@ if (mysqli_num_rows($result) != 1) {
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['user_image'] = $row['user_image'];
         $_SESSION['user_name'] = $row['user_name'];
+        $_SESSION['user_email'] = $row['user_email'];
         $_SESSION['user_level'] = $row['user_level'];
         header("location: ../index.php");
         exit();

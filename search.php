@@ -1,44 +1,54 @@
 <?php
 include_once 'tools/head.php';
 include_once 'tools/header.php';
+var_dump($_GET);
+
+if (isset($_GET['search']) and isset($_GET['date'])) {
+    header("location: index.php");
+    exit();
+}
+if (empty($_GET['search']) xor empty($_GET['search'])) {
+    header("Location: index.php");
+    exit();
+}
+
 ?>
 
-<title>HOME</title>
+<title>Search</title>
 
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 <link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/gallery-materialize.min.opt.css?0" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/prism.css?0" rel="stylesheet">
 
-<style>
-img {
-    max-width:400px;
-}
-
-.gj{
-    font-size:20px; !important
-    margin-top:0; !important
-}
-</style>
-
 <div id="documentation" class="cx gray">
     <div class="db">
         <div class="">
             <div class="d gu hz">
                 <div id="gallery-expand" class="scrollspy">
-                    <h3>Ultimas postagens</h3>
-                    <p class="ef">Encontre as ultimas postagens dessa incrível comunidade.</p>
-                    <div class="b e">
+                    <h3>Pesquisar</h3>
+                    <p class="ef">Você pesquisou por: <span style='font-weight:bold;'> <?=$_GET["search"]?> </span></p>
 
             <?php
-$query = 'SELECT * from publication where 1 ORDER BY publication_datetime DESC';
+include_once 'includes/dbh.php';
+$search = mysqli_real_escape_string($conn, $_GET['search']);
+$date = (int) mysqli_real_escape_string($conn, $_GET['date']);
+$fack = (int) $date + 10;
+if (isset($_GET['search'])) {
+    $query = "SELECT * from publication where publication_title like '%$search%';";
+} else {
+    $query = "SELECT * from publication where object_date >= $date and object_date < $fack;";
+}
 $result = mysqli_query($conn, $query);
+if (mysqli_num_rows($result) == 0) {
+    echo " <p class='ef'> Nenhum resultado encontrado.</p>";
+}
 $i = 0;
 while ($row = mysqli_fetch_assoc($result)) {
     $post[$i] = array($row['publication_id'], $row['user_id'], $row['publication_title'], $row['publication_datetime'], $row['publication_description'], $row['publication_main_image'], $row['object_date']);
     $i++;
 }
-
+echo '<div class="b e">';
 foreach ($post as $value) {
     $path_publication = "database/publication/" . $value[0] . "/" . $value[5];
     if (true): ?>
@@ -53,7 +63,7 @@ foreach ($post as $value) {
                                 <div class="gallery-body">
                                     <div class="title-wrapper">
                                         <h3><?=$value['2']?></h3>
-                                        <span class="gj"><?=$value['6']?></span><br>
+                                        <span class="gj"><?=$value['6']?></span>
                                     </div>
                                     <p class='fi'>
                                         <?=$value['4']?>

@@ -2,11 +2,12 @@
 <style>
 
 </style>
-
 <nav>
     <div class="nav-wrapper green lighten-1" style="">
-        <a href="index.php" class="brand-logo">MKAMP</a>
-        <ul class="right hide-on-med-and-down">
+
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="index.php" class="brand-logo"><img src="assets/KAMP.png" style='height:60px;'><a href="index.php"  style='margin-left:90px;' class="brand-logo">KAMP</a></a>
+        <ul class="right ">
             <?php if (!isset($_SESSION['user_id'])): ?>
                 <li><a href="login.php">Entrar</a></li>
                 <li><a href="signin.php">Cadastrar</a></li>
@@ -15,7 +16,7 @@
                 <li><a href="includes/moderation.php">Moderação</a></li>
             <?php endif;?>
             <?php if (isset($_SESSION['user_id'])): ?>
-                <li><a href="#" data-target="slide-out" class="sidenav-trigger">ai e foda</a></li>
+            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
                 <li><a href="publication.php">Nova Publicação</a></li>
                 <li><a href="includes/logout.php">Logout</a></li>
             <?php endif;?>
@@ -23,9 +24,9 @@
             <li class='active' style=' height:64px; '>
                 <div class="row">
                     <div class="col s12">
-                        <form action='' method=''>
+                        <form action='search.php' method='GET'>
                             <div class="input-field">
-                                <input id="search" type="search" required class='transparent'>
+                                <input id="search" type="search" name='search' required class='transparent'>
                                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                                 <i class="material-icons">close</i>
                             </div>
@@ -50,12 +51,9 @@
 <ul id="slide-out" class="sidenav">
     <li>
         <div class="user-view">
-            <div class="background">
-                <img src="images/office.jpg">
-            </div>
-            <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-            <a href="#name"><span class="white-text name">John Doe</span></a>
-            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+            <a><img class="circle" src="<?="database/profiles/" . $_SESSION['user_name'] . "/" . $_SESSION['user_image'];?>"</a>
+            <a><span class="white-text name">John Doe</span></a>
+            <a><span class="white-text email">jdandturk@gmail.com</span></a>
         </div>
     </li>
     <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
@@ -64,7 +62,6 @@
     <li><a class="subheader">Subheader</a></li>
     <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
   </ul>
-  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
 <script>
 options = { hover: true, coverTrigger: false}

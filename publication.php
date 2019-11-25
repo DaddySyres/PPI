@@ -27,7 +27,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="card-content">
                     <span class="card-title">Cadastrar</span>
                     <br>
-                    <form action="includes/signin.php" id='form1' method='POST' enctype='multipart/form-data'>
+                    <form action="includes/publication.php" id='form1' method='POST' enctype='multipart/form-data'>
 
                         <div class="row">
                             <div class="col s12">
@@ -36,42 +36,49 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s6">
-                                <label style='font-size:16px;' for="pass">Senha </label>
-                                <input style='font-size:20px;' name='password' id='pass' type="password" required>                            </div>
+                            <div class=" col s12">
+                                <label style='font-size:16px;' for="textarea1">Descrição</label>
+                                <textarea style='font-size:20px;' name='description' id="textarea1" class="materialize-textarea validate"></textarea>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class=" col s12">
+                                <label style='font-size:16px;' for="textarea2">Texto Principal</label>
+                                <textarea style='font-size:20px;' name='text' id="textarea2" class="materialize-textarea validate"></textarea>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col s6">
                                 <div class="file-field input-field" style='padding-top:9px;'>
                                     <div class="btn">
-                                        <span>Imagem de perfil</span>
+                                        <span>Imagem principal</span>
                                         <input type="file" name="upload_image" id="upload_image" />
                                     </div>
-                                    <div class="file-path-wrapper" hide>
+                                    <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col s6 ">
-                                <div>
-                                    <label style='font-size:16px;' for="email">Email </label>
-                                    <input style='font-size:20px;' name='email' id='email' type="email" required>
-                                </div>
+                            <div class="col s2">
+
+                                <label style='font-size:16px;' for="obj">Ano do Objeto</label>
+                                <input style='font-size:20px;' name='obj'  min="1969" max="2019" value='2019' id='title' type="number" required>
                             </div>
                         </div>
 
 
 
-                        <div class="row"  style='height:360px'>
-                            <div class="col s4">
+                        <div class="row" >
+                            <div class="col s4"  style='height:750px'>
+                            <label style='font-size:24px;' for="">Foto Principal</label>
                                 <div id="thefuck">
                                     <div id="image_demo" style="width:350px; margin-top:30px"></div>
                                 </div>
                             </div>
-
-
-                            <div class="col s4">
+                        </div>
+                        <div class="row"></div>
+                            <div class="col s4 offset-s4" style='height:200px' >
                                 <div class="center-align" style='margin-top:60px;'>
                                     <input type="hidden" name='OOF' id='imagebase64'>
                                     <button class="btn-large waves-effect waves-heavy hoverable" id='crop_image' name="action">Salvar
@@ -87,41 +94,43 @@ if (!isset($_SESSION['user_id'])) {
 
         <script>
             $(document).ready(function(){
-
-                    $image_crop = $('#image_demo').croppie({
+                $image_crop = $('#image_demo').croppie({
                     enableExif: true,
                     viewport: {
-                    width:200,
-                    height:200,
-                    type:'square' //circle
+                        width:900,
+                        height:600,
+                        type:'square' //circle
                     },
                     boundary:{
-                    width:300,
-                    height:300
+                        width:1000,
+                        height:700
                     }
                 });
 
-            $('#upload_image').on('change', function(){
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                $image_crop.croppie('bind', {
-                    url: event.target.result
-                }).then(function(){
-                    console.log('jQuery bind complete');
+                $('#upload_image').on('change', function(){
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        $image_crop.croppie('bind', {
+                            url: event.target.result
+                        }).then(function(){
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
                 });
-                }
-                reader.readAsDataURL(this.files[0]);
+
+
+                $('#crop_image').click(function(event){
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function(response){
+                        $('#imagebase64').val(response);
+                    })
+                });
+
+
             });
-            $('#crop_image').click(function(event){
-                $image_crop.croppie('result', {
-                    type: 'canvas',
-                    size: 'viewport'
-                }).then(function(response){
-                    $('#imagebase64').val(response);
-                   //    $('#form').submit();
-            })
-        });
-    });
 </script>
 
 </body>
