@@ -6,10 +6,6 @@ if (isset($_GET['search']) and isset($_GET['date'])) {
     header("location: index.php");
     exit();
 }
-if (empty($_GET['search']) xor empty($_GET['search'])) {
-    header("Location: index.php");
-    exit();
-}
 
 ?>
 
@@ -30,14 +26,9 @@ if (empty($_GET['search']) xor empty($_GET['search'])) {
 
             <?php
 include_once 'includes/dbh.php';
-$search = mysqli_real_escape_string($conn, $_GET['search']);
 $date = (int) mysqli_real_escape_string($conn, $_GET['date']);
 $fack = (int) $date + 10;
-if (isset($_GET['search'])) {
-    $query = "SELECT * from publication where publication_title like '%$search%';";
-} else {
-    $query = "SELECT * from publication where object_date >= $date and object_date < $fack;";
-}
+$query = "SELECT * from publication where object_date >= $date and object_date < $fack;";
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) == 0) {
     echo " <p class='ef'> Nenhum resultado encontrado.</p>";

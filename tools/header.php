@@ -37,12 +37,12 @@
             <li class='active'><a class="dropdown-trigger" href="#!" data-target="oof">Décadas<i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
         <ul id="oof" class="dropdown-content">
-            <li><a href="search">2010</a></li>
-            <li><a href="#!">2000</a></li>
-            <li><a href="#!">1990</a></li>
-            <li><a href="#!">1980</a></li>
-            <li><a href="#!">1970</a></li>
-            <li><a href="#!">1960</a></li>
+            <li><a href="search_date.php?date=2010">2010</a></li>
+            <li><a href="search_date.php?date=2000">2000</a></li>
+            <li><a href="search_date.php?date=1990">1990</a></li>
+            <li><a href="search_date.php?date=1980">1980</a></li>
+            <li><a href="search_date.php?date=1970">1970</a></li>
+            <li><a href="search_date.php?date=1960">1960</a></li>
         </ul>
     </div>
 </nav>
@@ -50,33 +50,33 @@
 
 <ul id="slide-out" class="sidenav">
     <li>
-        <div class="user-view">
-            <a><img class="circle" src="<?="database/profiles/" . $_SESSION['user_name'] . "/" . $_SESSION['user_image'];?>"</a>
-            <a><span class="white-text name">John Doe</span></a>
-            <a><span class="white-text email">jdandturk@gmail.com</span></a>
+        <div class="user-view" >
+            <div class="background" style ="background-color: #e9e9e9; "></div>
+            <a><img class="circle" style='height:75px; width:75px;' src="<?="database/profiles/user/" . $_SESSION['user_name'] . "/" . $_SESSION['user_image'];?>"</a>
+            <a><span style="font-size:24px; color:black;"  class="name"><?=$_SESSION['user_name']?></span></a>
+            <a><span style=" color:black;" class="email"><?=$_SESSION['user_email']?> </span></a>
         </div>
     </li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
+    <li><a href="mypublication.php" style="font-size:16px;" >Minhas Publicações<i class=" material-icons">add</i></a></li>
+    <li><a href="myprofile.php" style="font-size:16px;" >Editar Perfil<i class="material-icons">account_circle</i></a></li>
     <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    <?php if($_SESSION['user_level'] == 2):?>
+    <li><a href="modarate.php" style="font-size:16px;" >Moderar Publicações<i class="material-icons">block</i></a></li>
+    <li><a href="editabout.php" style="font-size:16px;" >Editar Sobre<i class="material-icons">home</i></a></li>
+    <?php endif;?>
+
   </ul>
 
 <script>
 options = { hover: true, coverTrigger: false}
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.dropdown-trigger');
-    var instances = M.Dropdown.init(elems, options);
+    var instances = M.Dropdown.init(elems, options);href="search_date.php?date=2010"
 });
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems, options);
   });
-
-  // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
-  // var collapsibleElem = document.querySelector('.collapsible');
-  // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
 
 </script>

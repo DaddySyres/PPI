@@ -10,6 +10,6 @@
 </head>
 <body>
 <?php
-session_start();
+session_start();    
 include_once 'includes/dbh.php';
 ?>
