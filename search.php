@@ -42,10 +42,8 @@ $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) == 0) {
     echo " <p class='ef'> Nenhum resultado encontrado.</p>";
 }
-$i = 0;
 while ($row = mysqli_fetch_assoc($result)) {
-    $post[$i] = array($row['publication_id'], $row['user_id'], $row['publication_title'], $row['publication_datetime'], $row['publication_description'], $row['publication_main_image'], $row['object_date']);
-    $i++;
+    $post[] = array($row['publication_id'], $row['user_id'], $row['publication_title'], $row['publication_datetime'], $row['publication_description'], $row['publication_main_image'], $row['object_date']);
 }
 echo '<div class="b e">';
 foreach ($post as $value) {

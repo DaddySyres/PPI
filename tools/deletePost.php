@@ -1,7 +1,7 @@
 <?php
     session_start();
     $id = $_GET['id'];
-    $conn = mysqli_connect('localhost', 'dar', 'usbw', 'PPI');
+    include_once"../includes/dbh.php";
 
     if(!empty($id)){
         $sql ="DELETE FROM `publication` WHERE publication_id = '$id';";
@@ -10,6 +10,9 @@
     <?php
                 $query = "SELECT * from publication where user_id = " . $_SESSION['user_id'] . " ORDER BY publication_datetime DESC";
                 $result = mysqli_query($conn, $query);
+                if(mysqli_num_rows($result) == 0){
+                    echo"<h3>Nenhuma publicação encontrada</h3> ";
+                }
                 while ($row = mysqli_fetch_assoc($result)) {
                     $post[] = array($row['publication_id'], $row['publication_title'],  $row['publication_description'], $row['publication_text'], $row['object_date']);
                 }

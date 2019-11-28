@@ -12,6 +12,7 @@ if (!isset($_GET['id'])) {
 
 
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="container ">
     <div class="row">
@@ -72,12 +73,39 @@ $sql = "SELECT count(*) as suck from `likes` where `publication_id` = $value[0];
 
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <h4>Denunciar</h4>
-      <p>Escolha o motivo da denuncia</p>
+        <h4>Denunciar</h4>
+        <p>Escolha o motivo da denuncia</p>
+        <p>
+      <label>
+        <input name="group1" value="Conteudo sexual/Abuso de Menores" type="radio"/>
+        <span>Conteudo sexual/Abuso de Menores</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="group1" value='Conteúdo Violencia/incitação ao ódio' type="radio" />
+        <span>Conteúdo Violencia/incitação ao ódio</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input value="Terrorismo ou Atos Perigoso" name="group1" type="radio"  />
+        <span>Terrorismo ou Atos Perigoso</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="group1" id="other" type="radio" />
+        <span>Outro:<input id="inline" type="text" data-length="100" class="validate"></span>
+      </label>
+    </p>
+
+
+
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancelar</a>
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Enviar</a>
+        <a href="#!" onclick=" report(<?=$value[0]?>, <?=$_SESSION['user_id']?>)" class="modal-close waves-effect waves-green btn-flat">Enviar</a>
     </div>
   </div>
 
@@ -137,6 +165,7 @@ $sql = "SELECT count(*) as suck from `likes` where `publication_id` = $value[0];
     </div>
 </div>
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.modal');
             var instances = M.Modal.init(elems, options);
@@ -183,14 +212,29 @@ $sql = "SELECT count(*) as suck from `likes` where `publication_id` = $value[0];
             xhttp.open("GET", "tools/getcom.php?p=" + post_id + "&u="+ user_id, true);
             xhttp.send();
         }
-        
-        document.getElementById('yourBox').onchange = function() {
-            document.getElementById('yourText').disabled = !this.checked;
-        };
+        document.getElementById('inline').onkeyup = function() {
+            document.getElementById('other').value = this.value;
+            document.getElementById('other').checked = true;
+        }
 
-        getcomment(<?=$value[0]?>, <?= $_SESSION['user_id']?>);
+        function report(post_id, user_id){
+            var text = document.querySelector('input[name="group1"]:checked').value;
+            if(text == " "){
+                M.toast({html: 'Motivo vazio, denuncia não enviada!'});
+                return;
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    M.toast({html: 'Denuncia enviada!'});
+                    document.getElementById('inline').value =" ";
+                }
+            };
+            xhttp.open("GET", "tools/report.php?p=" + post_id + "&u="+ user_id + "&t=" + text, true);
+            xhttp.send();
+        }
 
-
+        window.onload = getcomment(<?=$value[0]?>, <?= $_SESSION['user_id']?>);
     </script>
 </body>
 </html>

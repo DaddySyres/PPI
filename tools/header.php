@@ -9,14 +9,13 @@
         <a href="index.php" class="brand-logo"><img src="assets/KAMP.png" style='height:60px;'><a href="index.php"  style='margin-left:90px;' class="brand-logo">KAMP</a></a>
         <ul class="right ">
             <?php if (!isset($_SESSION['user_id'])): ?>
+                <li><a href="about.php">Sobre</a></li>
                 <li><a href="login.php">Entrar</a></li>
                 <li><a href="signin.php">Cadastrar</a></li>
             <?php endif;?>
-            <?php if ($_SESSION['user_id'] == 2): ?>
-                <li><a href="includes/moderation.php">Moderação</a></li>
-            <?php endif;?>
             <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+                <li><a href="about.php">Sobre</a></li>
                 <li><a href="publication.php">Nova Publicação</a></li>
                 <li><a href="includes/logout.php">Logout</a></li>
             <?php endif;?>
@@ -58,10 +57,10 @@
         </div>
     </li>
     <li><a href="mypublication.php" style="font-size:16px;" >Minhas Publicações<i class=" material-icons">add</i></a></li>
-    <li><a href="myprofile.php" style="font-size:16px;" >Editar Perfil<i class="material-icons">account_circle</i></a></li>
+    <li><a href="myprofile.php" style="font-size:16px;" >Perfil<i class="material-icons">account_circle</i></a></li>
     <li><div class="divider"></div></li>
     <?php if($_SESSION['user_level'] == 2):?>
-    <li><a href="modarate.php" style="font-size:16px;" >Moderar Publicações<i class="material-icons">block</i></a></li>
+    <li><a href="moderate.php" style="font-size:16px;" >Moderar Publicações<i class="material-icons">block</i></a></li>
     <li><a href="editabout.php" style="font-size:16px;" >Editar Sobre<i class="material-icons">home</i></a></li>
     <?php endif;?>
 

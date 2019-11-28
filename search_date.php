@@ -22,7 +22,7 @@ if (isset($_GET['search']) and isset($_GET['date'])) {
             <div class="d gu hz">
                 <div id="gallery-expand" class="scrollspy">
                     <h3>Pesquisar</h3>
-                    <p class="ef">Você pesquisou por: <span style='font-weight:bold;'> <?=$_GET["search"]?> </span></p>
+                    <p class="ef">Você pesquisou por: <span style='font-weight:bold;'> <?=$_GET["date"]?> a <?=$_GET["date"] + 10?> </span></p>
 
             <?php
 include_once 'includes/dbh.php';

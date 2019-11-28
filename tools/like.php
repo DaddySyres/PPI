@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$conn = mysqli_connect('localhost', 'dar', 'usbw', 'PPI');
+include_once"../includes/dbh.php";
 if (isset($_GET['p']) && !empty($_GET['p']) && isset($_GET['u']) && !empty($_GET['u'])) {
     $id_post = $_GET['p'];
     $id_user = $_GET['u'];

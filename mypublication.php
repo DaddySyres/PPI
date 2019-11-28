@@ -13,6 +13,9 @@ if (!isset($_SESSION['user_id'])) {
             <?php
                 $query = "SELECT * from publication where user_id = " . $_SESSION['user_id'] . " ORDER BY publication_datetime DESC";
                 $result = mysqli_query($conn, $query);
+                if(mysqli_num_rows($result) == 0){
+                    echo"<h3>Nenhuma publicação encontrada</h3> ";
+                }
                 while ($row = mysqli_fetch_assoc($result)) {
                     $post[] = array($row['publication_id'], $row['publication_title'],  $row['publication_description'], $row['publication_text'], $row['object_date']);
                 }
@@ -62,7 +65,6 @@ if (!isset($_SESSION['user_id'])) {
 
         function deletePost(id) {
             var xhttp = new XMLHttpRequest();
-            alert("tools/deletePost.php?id=" + id);
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById('agh').innerHTML = this.responseText;
